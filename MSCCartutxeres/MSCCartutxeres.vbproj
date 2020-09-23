@@ -357,7 +357,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\msc_cloud\msc_cloud\msc_cloud.vbproj">
+    <ProjectReference Include="..\..\msc_cloud\msc_cloud\msc_cloud\msc_cloud.vbproj">
       <Project>{b7f464e7-11e0-4a82-b529-62dcc57709c2}</Project>
       <Name>msc_cloud</Name>
     </ProjectReference>
