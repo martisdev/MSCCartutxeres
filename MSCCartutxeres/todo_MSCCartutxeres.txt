@@ -1,0 +1,1 @@
+- Els sistema de reproducció (pas a pas/automàtic/ loop) passa a ser Opció pas a pas/ automàtic i opció loop

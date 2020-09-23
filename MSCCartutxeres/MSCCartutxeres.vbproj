@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D59751E3-BF79-45E7-B5CF-EFAD063C98F9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>MSCCartutxeres.My.MyApplication</StartupObject>
+    <RootNamespace>MSCCartutxeres</RootNamespace>
+    <AssemblyName>MSCCartutxeres</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <ApplicationIcon>HP-MediaPlayer-Dock.ico</ApplicationIcon>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <OptionStrict>Off</OptionStrict>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionInfer>Off</OptionInfer>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunCodeAnalysis>True</RunCodeAnalysis>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\Marta\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>MSCCartutxeres.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <DocumentationFile>MSCCartutxeres.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <StartArguments />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <StartAction>Project</StartAction>
+    <StartArguments>DEBUG</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+    <NoWarn>42353,42354,42355</NoWarn>
+    <Prefer32Bit>False</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestTimestampUrl>http://timestamp.verisign.com/scripts/timstamp.dll</ManifestTimestampUrl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>mykey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bass.Net">
+      <HintPath>..\..\bin\Bass.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\SharpDevelop Projects\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\SharpDevelop Projects\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\SharpDevelop Projects\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\Release\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Compartit\CustomFont.vb">
+      <Link>Compartit\CustomFont.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\frmSplash.designer.vb">
+      <Link>Compartit\frmSplash.designer.vb</Link>
+      <DependentUpon>frmSplash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="..\..\Compartit\frmSplash.vb">
+      <Link>Compartit\frmSplash.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\frmTip.vb">
+      <Link>Compartit\frmTip.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlAudioBASS.vb">
+      <Link>Compartit\mdlAudioBASS.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlCodeDecode.vb">
+      <Link>Compartit\mdlCodeDecode.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlDBS.vb">
+      <Link>Compartit\mdlDBS.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlDefinesMultimedia.vb">
+      <Link>Compartit\mdlDefinesMultimedia.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlFrmDetall.vb">
+      <Link>Compartit\mdlFrmDetall.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlFrontEnd.vb">
+      <Link>Compartit\mdlFrontEnd.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlInfo.vb">
+      <Link>Compartit\mdlInfo.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlIniFile.vb">
+      <Link>Compartit\mdlIniFile.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlMscDefines.vb">
+      <Link>Compartit\mdlMscDefines.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlPicture.vb">
+      <Link>Compartit\mdlPicture.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlProgrames.vb">
+      <Link>Compartit\mdlProgrames.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlSistOper.vb">
+      <Link>Compartit\mdlSistOper.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlTimeDate.vb">
+      <Link>Compartit\mdlTimeDate.vb</Link>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="clsParamsCartutx.vb" />
+    <Compile Include="frmAddMark.Designer.vb">
+      <DependentUpon>frmAddMark.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAddMark.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAudioDBS.Designer.vb">
+      <DependentUpon>frmAudioDBS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAudioDBS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuscarTemes.designer.vb">
+      <DependentUpon>frmBuscarTemes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmBuscarTemes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCanviDurada.Designer.vb">
+      <DependentUpon>frmCanviDurada.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCanviDurada.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCartutxera.Designer.vb">
+      <DependentUpon>frmCartutxera.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCartutxera.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFileExplorer.Designer.vb">
+      <DependentUpon>frmFileExplorer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmFileExplorer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHistory.Designer.vb">
+      <DependentUpon>frmHistory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmHistory.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSincro.designer.vb">
+      <DependentUpon>frmSincro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSincro.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mdlCartutx.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="remote\Airence\clsAirence.vb" />
+    <Compile Include="remote\Airence\DeviceManagement.vb" />
+    <Compile Include="remote\Airence\DeviceManagementDeclarations.vb" />
+    <Compile Include="remote\Airence\FileIODeclarations.vb" />
+    <Compile Include="remote\Airence\Hid.vb" />
+    <Compile Include="remote\Airence\HidDeclarations.vb" />
+    <Compile Include="remote\Airence\mdlAirence.vb" />
+    <Compile Include="remote\frmAirence.Designer.vb">
+      <DependentUpon>frmAirence.vb</DependentUpon>
+    </Compile>
+    <Compile Include="remote\frmAirence.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="remote\frmRemote.Designer.vb">
+      <DependentUpon>frmRemote.vb</DependentUpon>
+    </Compile>
+    <Compile Include="remote\frmRemote.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="remote\mdlCTL04BOX.vb" />
+    <Compile Include="Settings.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Compartit\frmSplash.resx">
+      <Link>Compartit\frmSplash.resx</Link>
+      <DependentUpon>frmSplash.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\Compartit\frmTip.resx">
+      <Link>Compartit\frmTip.resx</Link>
+      <DependentUpon>frmTip.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAddMark.resx">
+      <DependentUpon>frmAddMark.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAudioDBS.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAudioDBS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBuscarTemes.resx">
+      <DependentUpon>frmBuscarTemes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCanviDurada.resx">
+      <DependentUpon>frmCanviDurada.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCartutxera.resx">
+      <DependentUpon>frmCartutxera.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFileExplorer.resx">
+      <DependentUpon>frmFileExplorer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHistory.resx">
+      <DependentUpon>frmHistory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSincro.resx">
+      <DependentUpon>frmSincro.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="remote\frmAirence.resx">
+      <DependentUpon>frmAirence.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="remote\frmRemote.resx">
+      <DependentUpon>frmRemote.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="msc-soft.com.pfx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="mykey.pfx" />
+    <None Include="Resources\DIGITALDREAMFATNARROW.ttf" />
+    <None Include="Resources\DIGITALDREAMNARROW.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HP-MediaPlayer-Dock.ico" />
+    <Content Include="todo_MSCCartutxeres.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\msc_cloud\msc_cloud\msc_cloud.vbproj">
+      <Project>{b7f464e7-11e0-4a82-b529-62dcc57709c2}</Project>
+      <Name>msc_cloud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\msc_lib\msc_lib\msc_lib.vbproj">
+      <Project>{F5D7C75A-6916-456A-929F-80AF8518A6D8}</Project>
+      <Name>msc_lib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
