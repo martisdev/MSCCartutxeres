@@ -93,7 +93,8 @@
     <ManifestTimestampUrl>http://timestamp.verisign.com/scripts/timstamp.dll</ManifestTimestampUrl>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>mykey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bass.Net">
@@ -326,7 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="msc-soft.com.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -336,13 +336,14 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="mykey.pfx" />
     <None Include="Resources\DIGITALDREAMFATNARROW.ttf" />
     <None Include="Resources\DIGITALDREAMNARROW.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\registre d%27actualitzacions.txt">
+      <Link>registre d%27actualitzacions.txt</Link>
+    </Content>
     <Content Include="HP-MediaPlayer-Dock.ico" />
-    <Content Include="todo_MSCCartutxeres.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
