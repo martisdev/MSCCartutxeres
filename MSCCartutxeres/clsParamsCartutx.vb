@@ -155,7 +155,7 @@ Namespace Parametres
             'cloud
             param_OnLine = CBool(dt.Rows(CONFIG.paramOnLine - 1)("params_valor"))
             param_ClientID = CInt(dt.Rows(CONFIG.paramClientID - 1)("params_valor"))
-            Dim StrSql As String = "SELECT AES_DECRYPT(UNHEX(params_valor),'" & my_secret_key_to_encrypt & "') as psw FROM config_params WHERE params_id = " & CONFIG.paramClientKey
+            Dim StrSql As String = "SELECT AES_DECRYPT(UNHEX(params_valor),'" & Cloud.MSC_PRI_SECRET_KEY & "') as psw FROM config_params WHERE params_id = " & CONFIG.paramClientKey
             Try
                 param_ClientKey = Encoding.ASCII.GetString(CType(db.ExecuteScalar(StrSql), Byte()))
             Catch ex As Exception
