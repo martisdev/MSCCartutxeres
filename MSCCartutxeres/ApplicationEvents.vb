@@ -6,6 +6,7 @@ Namespace My
 	Partial Friend Class MyApplication
 
         Const MIN_VER_DBS As String = "4.1"
+        Const COMPATIBLE_VERSION_DBS As String = "4.1"
 
         Private Sub MyApplication_Shutdown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shutdown
             CloseMyApp()
@@ -44,11 +45,11 @@ Namespace My
 			End If	
 			'control d'usuaris            
 			Usuari = New MSC.User(MyAPP,STANDALONE)
-			If Usuari.UsrErrNum > 0 Then CloseMyApp() 
-			
-			If STANDALONE = False Then If MyAPP.TestVersionDBS(MIN_VER_DBS) = False Then CloseMyApp()
-			
-			Params = New Parametres.clsParams(STANDALONE)
+			If Usuari.UsrErrNum > 0 Then CloseMyApp()
+
+            If STANDALONE = False Then If MyAPP.TestVersionDBS(MIN_VER_DBS, COMPATIBLE_VERSION_DBS) = False Then CloseMyApp()
+
+            Params = New Parametres.clsParams(STANDALONE)
 			lang = Nothing
             lang = New MSC.UserLanguage(Params.Lang)
             lang.StrApp = My.Application.Info.AssemblyName
