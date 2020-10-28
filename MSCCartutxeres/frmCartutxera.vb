@@ -607,7 +607,7 @@ Public Class frmCartutxera
             FirstToAdd = Me.flowBotons.Controls.Count
             Dim filenames As String() = CType(e.Data.GetData(DataFormats.FileDrop), String())
             For Each file As String In filenames
-                LoadToList(file)
+                CarregaFitxer(file)
             Next
         ElseIf IsNothing(listAudioFromDBS) = False Then
             FirstToAdd = addElementlist(listAudioFromDBS)
@@ -641,6 +641,7 @@ Public Class frmCartutxera
 
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop, True)
+
             If UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "MP3" _
                 Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "MP2" _
                 Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "MP1" _
@@ -650,7 +651,8 @@ Public Class frmCartutxera
                 Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "AIF" _
                 Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "CDA" _
                 Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "PTC" _
-                Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "M3U" Then
+                Or UCase(Microsoft.VisualBasic.Right(files(0), 3)) = "M3U" _
+                Or UCase(Microsoft.VisualBasic.Right(files(0), 4)) = "M3U8" Then
                 e.Effect = DragDropEffects.Copy
                 DragLVDisp = Nothing
                 Me.cmdPlayPause.AllowDrop = True
@@ -1538,7 +1540,7 @@ Public Class frmCartutxera
             For i As Short = 0 To My.Application.CommandLineArgs.Count - 1
                 Dim PathCommandLine As String = Replace(My.Application.CommandLineArgs.Item(i), "~", " ")
                 If IO.File.Exists(PathCommandLine) = True Then
-                    LoadToList(PathCommandLine)
+                    CarregaFitxer(PathCommandLine)
                     Me.cmbTypePlayer.SelectedIndex = TypePlay.PLAY_CUNTINUOS
                     PlayFilePlayer(0)
                 End If
@@ -1547,7 +1549,7 @@ Public Class frmCartutxera
         If My.Application.CommandLineArgs.Count = 0 And NumCart = 1 Then
             Dim tempFile As String = IO.Path.GetTempPath & "tracklist.ptc"
             If IO.File.Exists(tempFile) = True Then
-                LoadToList(tempFile)
+                CarregaFitxer(tempFile)
                 EnableButtons(0)
             End If
         End If
@@ -1596,50 +1598,7 @@ Public Class frmCartutxera
         e.Cancel = Cancel
     End Sub
 
-    Friend Sub LoadToList(ByVal Path As String)
-        Dim Title As String = ""
-        Dim interp As String = ""
-        Dim Duration As Date
-        Dim BPM As Single = 0
-        Dim Handle As Integer
-        Dim tLength As Single
-        Dim lenTrack As Long
-        Dim TI As New Un4seen.Bass.AddOn.Tags.TAG_INFO
 
-        If UCase(Microsoft.VisualBasic.Right(Path, 3)) = "MP3" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 3)) = "MP2" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 3)) = "MP1" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 4)) = "AIFF" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 4)) = "AIF" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 3)) = "WAV" _
-            Or UCase(Microsoft.VisualBasic.Right(Path, 3)) = "OGG" Then
-            Handle = Bass.BASS_StreamCreateFile(Path, 0, 0, BASSFlag.BASS_DEFAULT)
-            If (BassTags.BASS_TAG_GetFromFile(Handle, TI)) Then
-                interp = TI.artist
-                Title = TI.title
-            End If
-            If Title.Length = 0 Then Title = GetFileName(Path)
-            If interp.Length = 0 Then interp = IO.Directory.GetParent(Path).Name
-            lenTrack = Bass.BASS_ChannelGetLength(Handle)
-            tLength = Bass.BASS_ChannelBytes2Seconds(Handle, lenTrack)
-            Duration = Un4seen.Bass.Utils.FixTimespan(tLength, "HHMMSS")
-            If mnuCalcBPMOnLoad.Checked = True Then BPM = getBPMFitxer(Path, Me.Handle)
-            addElementlist(mdlMscDefines.Tipus_Play.CTL_SISTEMA, Title, interp, Path, 0, Duration, #12:00:00 AM#, BPM)
-            Bass.BASS_StreamFree(Handle)
-        ElseIf UCase(Microsoft.VisualBasic.Right(Path, 3)) = "PTC" Or UCase(Microsoft.VisualBasic.Right(Path, 3)) = "M3U" Then
-            CarregaLListat(Path)
-        ElseIf UCase(Microsoft.VisualBasic.Right(Path, 3)) = "CDA" Then
-            Handle = BassCd.BASS_CD_StreamCreateFile(Path, BASSFlag.BASS_STREAM_AUTOFREE)
-            Title = GetFileName(Path)
-            interp = Path
-            lenTrack = Bass.BASS_ChannelGetLength(Handle)
-            tLength = Bass.BASS_ChannelBytes2Seconds(Handle, lenTrack)
-            Duration = Un4seen.Bass.Utils.FixTimespan(tLength, "HHMMSS")
-            If mnuCalcBPMOnLoad.Checked = True Then BPM = getBPMFitxer(Path, Me.Handle)
-            addElementlist(mdlMscDefines.Tipus_Play.CTL_SISTEMA, Title, interp, Path, 0, Duration, #12:00:00 AM#, BPM)
-            Bass.BASS_StreamFree(Handle)
-        End If
-    End Sub
 
     Private Sub CarregaLListat(ByRef sNomFitxer As String, Optional ByRef InitExe As Boolean = False)
         Dim Tipus As Short
@@ -1657,46 +1616,56 @@ Public Class frmCartutxera
         'Si la llista està invisible (Presentació de botons)
         'Controla la visió de la botonera
         'cmbTypeShow.SelectedIndex = TypeShow.SHOW_LIST
+        Dim MyExtension As String = IO.Path.GetExtension(sNomFitxer).ToLower
+        If MyExtension = ".ptc" Then
+            Using readerList As System.IO.StreamReader = New System.IO.StreamReader(sNomFitxer)
+                Dim line As String = readerList.ReadLine
+                ' Read first line.
+                If line.ToUpper <> "V:2" Then Exit Sub
 
-        NumFitxer = FreeFile()
-        FileOpen(NumFitxer, sNomFitxer, OpenMode.Input, OpenAccess.Read, OpenShare.Shared)
-        If Microsoft.VisualBasic.Right(sNomFitxer, 3).ToLower = "ptc" Then
-            Dim Versio As String = LineInput(NumFitxer)
-            If Versio.ToUpper = "V:2" Then
-                Do
+                ' Loop over each line in file, While list is Not Nothing.
+                Do While (Not line Is Nothing)
+
+                    ' Read in the next line.
+                    line = readerList.ReadLine
                     Try
-                        'recupera tots els valors del fitxer ptc
-                        Input(NumFitxer, Titol)
-                        Input(NumFitxer, SubTitol)
-                        Input(NumFitxer, strDate)
-                        Input(NumFitxer, Tipus)
-                        Input(NumFitxer, id)
-                        Input(NumFitxer, StrPath)
+                        Dim strval() As String = Split(line, ",")
+                        Titol = strval(0).Replace("~", ";")
+                        SubTitol = strval(1).Replace("~", ";")
+                        strDate = strval(2)
+                        Tipus = strval(3)
+                        id = strval(4)
+                        StrPath = strval(5)
                         Durada = CDate(strDate)
                         If OKFitxerToPlay(StrPath, Durada) Or Tipus = 200 Or Tipus = 100 Or Tipus = 101 Then
                             addElementlist(Tipus, Titol, SubTitol, StrPath, id, Durada)
                         End If
                     Catch ex As Exception
                     End Try
-                Loop Until EOF(NumFitxer)
-            End If
-        ElseIf Microsoft.VisualBasic.Right(sNomFitxer, 3).ToLower = "m3u" Then
+                Loop
+            End Using
+        ElseIf MyExtension = ".m3u" Or MyExtension = ".m3u8" Then
             Dim TI As New Un4seen.Bass.AddOn.Tags.TAG_INFO
-            Do
-                Input(NumFitxer, StrPath)
-                If OKFitxerToPlay(StrPath, Durada) Then
-                    Dim AudioHandle As Integer = Bass.BASS_StreamCreateFile(StrPath, 0, 0, BASSFlag.BASS_DEFAULT)
-                    If (BassTags.BASS_TAG_GetFromFile(AudioHandle, TI)) Then
-                        SubTitol = TI.artist
-                        Titol = TI.title
+            Using readerList As System.IO.StreamReader = New System.IO.StreamReader(sNomFitxer)
+                While True
+                    StrPath = readerList.ReadLine
+                    If StrPath Is Nothing Then
+                        Exit While
+                    Else
+                        If OKFitxerToPlay(StrPath, Durada) Then
+                            Dim AudioHandle As Integer = Bass.BASS_StreamCreateFile(StrPath, 0, 0, BASSFlag.BASS_DEFAULT)
+                            If (BassTags.BASS_TAG_GetFromFile(AudioHandle, TI)) Then
+                                SubTitol = TI.artist
+                                Titol = TI.title
+                            End If
+                            If Titol.Length = 0 Then Titol = GetFileName(StrPath)
+                            If SubTitol.Length = 0 Then SubTitol = IO.Directory.GetParent(StrPath).Name
+                            addElementlist(mdlMscDefines.Tipus_Play.CTL_SISTEMA, Titol, SubTitol, StrPath, 0, Durada)
+                        End If
                     End If
-                    If Titol.Length = 0 Then Titol = GetFileName(StrPath)
-                    If SubTitol.Length = 0 Then SubTitol = StrPath
-                    addElementlist(mdlMscDefines.Tipus_Play.CTL_SISTEMA, Titol, SubTitol, StrPath, 0, Durada)
-                End If
-            Loop Until EOF(NumFitxer)
+                End While
+            End Using
         End If
-        FileClose(NumFitxer)
         lbInfo.Text = LB_LIST & ": " & sNomFitxer
         lbInfo.Visible = True
         If InitExe Then
@@ -3165,7 +3134,9 @@ Public Class frmCartutxera
                 LIST_FILTER_FILES & " Aiff (*.aiff)|*.aiff; |" &
                 LIST_FILTER_FILES & " Aif (*.aif)|*.aif; |" &
                 LIST_FILTER_CART & " (*.ptc)|*.ptc; |" &
-                LIST_FILTER_WINAMP & " (*.m3u) |*.m3u"
+                LIST_FILTER_WINAMP & " (*.m3u) |*.m3u; |" &
+                LIST_FILTER_WINAMP & " (*.m3u8) |*.m3u8"
+
             .ShowDialog()
 
             For i = 0 To .FileNames.Length - 1
@@ -3183,32 +3154,32 @@ Public Class frmCartutxera
         Dim interp As String = ""
         Dim Duration As Date
         Dim BPM As Single = 0
-
-        If UCase(Microsoft.VisualBasic.Right(path, 3)) = "MP3" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "MP1" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "MP2" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "WAV" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "WMA" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "OGG" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "AIF" _
-            Or UCase(Microsoft.VisualBasic.Right(path, 4)) = "AIFF" Then
+        Dim My_extension As String = IO.Path.GetExtension(path).ToUpper
+        If My_extension = ".MP3" _
+            Or My_extension = ".MP1" _
+            Or My_extension = ".MP2" _
+            Or My_extension = ".WAV" _
+            Or My_extension = ".WMA" _
+            Or My_extension = ".OGG" _
+            Or My_extension = ".AIF" _
+            Or My_extension = ".AIFF" Then
 
             Handle = Bass.BASS_StreamCreateFile(path, 0, 0, BASSFlag.BASS_DEFAULT)
             If (BassTags.BASS_TAG_GetFromFile(Handle, TI)) Then
                 interp = TI.artist
                 Title = TI.title
             End If
-            If Len(Title) = 0 Then Title = GetFileName(path)
-            If Len(interp) = 0 Then interp = GetFileName(path)
+            If Title.Length = 0 Then Title = GetFileName(path)
+            If interp.Length = 0 Then interp = IO.Directory.GetParent(path).Name
             lenTrack = Bass.BASS_ChannelGetLength(Handle)
             tLength = Bass.BASS_ChannelBytes2Seconds(Handle, lenTrack)
             Duration = Un4seen.Bass.Utils.FixTimespan(tLength, "HHMMSS")
             If mnuCalcBPMOnLoad.Checked = True Then BPM = getBPMFitxer(path, Me.Handle)
             addElementlist(mdlMscDefines.Tipus_Play.CTL_SISTEMA, Title, interp, path, 0, Duration, #12:00:00 AM#, BPM)
             Bass.BASS_StreamFree(Handle)
-        ElseIf UCase(Microsoft.VisualBasic.Right(path, 3)) = "PTC" Or UCase(Microsoft.VisualBasic.Right(path, 3)) = "M3U" Then
+        ElseIf My_extension = ".PTC" Or My_extension = ".M3U" Or My_extension = ".M3U8" Then
             CarregaLListat(path)
-        ElseIf UCase(Microsoft.VisualBasic.Right(path, 3)) = "CDA" Then
+        ElseIf My_extension = ".CDA" Then
             Handle = BassCd.BASS_CD_StreamCreateFile(path, BASSFlag.BASS_STREAM_AUTOFREE)
             Title = GetFileName(path)
             interp = path
@@ -3265,12 +3236,14 @@ Line1:
                 Dim id As String = flowBotons.Controls(I).Controls(ControlsInButton._LabelID).Text
                 Dim Durada As String = flowBotons.Controls(I).Controls(ControlsInButton._LabelDuration).Tag
 
-                strTXT = Chr(34) & Titol & Chr(34) & ","
-                strTXT = strTXT & Chr(34) & SubTitol & Chr(34) & ","
+                Titol = Titol.Replace(",", "~")
+                SubTitol = SubTitol.Replace(",", "~")
+                strTXT = Titol & ","
+                strTXT = strTXT & SubTitol & ","
                 strTXT = strTXT & Durada & ","
                 strTXT = strTXT & Tipus & ","
                 strTXT = strTXT & id & ","
-                strTXT = strTXT & Chr(34) & Path & Chr(34)                
+                strTXT = strTXT & Path
                 writer.WriteLine(strTXT)
             Next
 
@@ -4368,20 +4341,12 @@ LineError:
 
 #Region "SessionMarks"
 
-    Structure session_marks
-        Dim SESSION_ID As Integer
-        Dim NOM_PRG As String
-        Dim DATE_IN As Date
-        Dim DATE_OUT As Date
-    End Structure
-
-    Dim Actual_SessionMarks As session_marks
-
-
     Private Sub mnuSession_Click(sender As Object, e As EventArgs) Handles mnuSession.Click
         LoadSession()
         If Actual_SessionMarks.SESSION_ID > 0 Then
             MetroFramework.MetroMessageBox.Show(Me, String.Format(MSG_MARKS_PRG, Actual_SessionMarks.NOM_PRG, Actual_SessionMarks.SESSION_ID), MSG_ATENCIO, MessageBoxButtons.OK, MessageBoxIcon.Information, 150)
+            mnuSession.Text = Actual_SessionMarks.NOM_PRG & " (" & Actual_SessionMarks.SESSION_ID & ")"
+            'mnuInsertMark.Enabled = True
         Else
             MetroFramework.MetroMessageBox.Show(Me, MSG_MARKS_NO_SESSION, MSG_ATENCIO, MessageBoxButtons.OK, MessageBoxIcon.Warning, 150)
             'mnuInsertMark.Enabled = False
@@ -4390,35 +4355,7 @@ LineError:
 
     End Sub
 
-    Private Sub LoadSession()
-        Dim db As New MSC.dbs(Cloud)
-        'todo: buscar-ho per una taula composta prglogger + prg_sessions
-        'Dim StrSql As String = "SELECT ses_id, ses_prg FROM prg_sessions WHERE ses_estat=" & SessionsStates.SESSION_STANDBY & " OR ses_estat=" & SessionsStates.SESSION_RECORDING & " ;"
-        Dim StrSql As String = "SELECT ses_id, prg_nom ,  log_datereg  as 'date_in',DATE_ADD(log_datereg, interval TIME_TO_SEC(ses_durada) second ) as 'date_out'
-                                    FROM 
-	                                    prg_sessions 
-                                    INNER JOIN 
-	                                    prglogger ON ses_id=log_sessio 
-                                    INNER JOIN  
-	                                    programes ON log_program=prg_id 
-                                    WHERE  (ses_estat=" & SessionsStates.SESSION_STANDBY & " or ses_estat=" & SessionsStates.SESSION_RECORDING & ") ORDER BY ses_estat ASC ;"
-        Dim dt As DataTable = db.getTable(StrSql) 'Standby o recording
-        If dt.Rows.Count > 0 Then
-            Actual_SessionMarks.SESSION_ID = CInt(dt.Rows(0)("ses_id"))
-            Actual_SessionMarks.NOM_PRG = dt.Rows(0)("prg_nom").ToString
-            Actual_SessionMarks.DATE_IN = CDate(dt.Rows(0)("date_in"))
-            Actual_SessionMarks.DATE_OUT = CDate(dt.Rows(0)("date_out"))
 
-            mnuSession.Text = Actual_SessionMarks.NOM_PRG & " (" & Actual_SessionMarks.SESSION_ID & ")"
-            'mnuInsertMark.Enabled = True
-        Else
-            Actual_SessionMarks.SESSION_ID = 0
-            Actual_SessionMarks.NOM_PRG = ""
-            Actual_SessionMarks.DATE_IN = Now.AddYears(-1)
-            Actual_SessionMarks.DATE_OUT = Now.AddYears(-1)
-        End If
-        db = Nothing
-    End Sub
 
     Private Sub mnuInsertMark_Click(sender As Object, e As EventArgs) Handles mnuInsertMark.Click
         Dim frmInsertMark As New frmAddMark
@@ -4433,17 +4370,6 @@ LineError:
         frmInsertMark = Nothing
     End Sub
 
-    Private Sub CreateMark(Comment As String)
-        If Actual_SessionMarks.DATE_OUT < Now() Then LoadSession()
-        If Actual_SessionMarks.SESSION_ID = 0 Then LoadSession()
-        If Actual_SessionMarks.SESSION_ID > 0 Then
-            Dim seconds As Integer = DateDiff(DateInterval.Second, Actual_SessionMarks.DATE_IN, Now)
-            Dim StrSql As String = "INSERT INTO marks_session (session_id, mark_second, mark_comment) VALUES ( " & Actual_SessionMarks.SESSION_ID & "," & seconds & ",'" & AddSlashes(Comment) & "');"
-            Dim db As New MSC.dbs(Cloud)
-            db.New_ID(StrSql)
-            db = Nothing
-        End If
-    End Sub
 
     Private Sub mnuEditMark_Click(sender As Object, e As EventArgs) Handles mnuEditMark.Click
         Dim myItem As ToolStripMenuItem = CType(sender, ToolStripMenuItem)

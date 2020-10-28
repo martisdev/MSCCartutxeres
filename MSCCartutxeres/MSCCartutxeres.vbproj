@@ -144,9 +144,11 @@
     </Compile>
     <Compile Include="..\..\Compartit\frmSplash.vb">
       <Link>Compartit\frmSplash.vb</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\..\Compartit\frmTip.vb">
       <Link>Compartit\frmTip.vb</Link>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="..\..\Compartit\mdlAudioBASS.vb">
       <Link>Compartit\mdlAudioBASS.vb</Link>
@@ -171,6 +173,9 @@
     </Compile>
     <Compile Include="..\..\Compartit\mdlIniFile.vb">
       <Link>Compartit\mdlIniFile.vb</Link>
+    </Compile>
+    <Compile Include="..\..\Compartit\mdlMarks.vb">
+      <Link>Compartit\mdlMarks.vb</Link>
     </Compile>
     <Compile Include="..\..\Compartit\mdlMscDefines.vb">
       <Link>Compartit\mdlMscDefines.vb</Link>

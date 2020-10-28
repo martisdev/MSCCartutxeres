@@ -103,7 +103,7 @@ Namespace My
 				For Each s As String In e.CommandLine
 					PathCommandLine = s.ToString
 					If IO.File.Exists(PathCommandLine) = True Then
-                        cart.LoadToList(PathCommandLine)
+                        cart.CarregaFitxer(PathCommandLine)
                         cart.cmbTypePlayer.SelectedIndex = TypePlay.PLAY_CUNTINUOS
                     End If
 				Next
