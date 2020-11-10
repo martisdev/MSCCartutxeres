@@ -1628,20 +1628,23 @@ Public Class frmCartutxera
 
                     ' Read in the next line.
                     line = readerList.ReadLine
-                    Try
-                        Dim strval() As String = Split(line, ",")
-                        Titol = strval(0).Replace("~", ";")
-                        SubTitol = strval(1).Replace("~", ";")
-                        strDate = strval(2)
-                        Tipus = strval(3)
-                        id = strval(4)
-                        StrPath = strval(5)
-                        Durada = CDate(strDate)
-                        If OKFitxerToPlay(StrPath, Durada) Or Tipus = 200 Or Tipus = 100 Or Tipus = 101 Then
-                            addElementlist(Tipus, Titol, SubTitol, StrPath, id, Durada)
-                        End If
-                    Catch ex As Exception
-                    End Try
+
+                    If line IsNot Nothing Then
+                        Try
+                            Dim strval() As String = Split(line, ",")
+                            Titol = strval(0).Replace("~", ";")
+                            SubTitol = strval(1).Replace("~", ";")
+                            strDate = strval(2)
+                            Tipus = strval(3)
+                            id = strval(4)
+                            StrPath = strval(5)
+                            Durada = CDate(strDate)
+                            If OKFitxerToPlay(StrPath, Durada) Or Tipus = 200 Or Tipus = 100 Or Tipus = 101 Then
+                                addElementlist(Tipus, Titol, SubTitol, StrPath, id, Durada)
+                            End If
+                        Catch ex As Exception
+                        End Try
+                    End If
                 Loop
             End Using
         ElseIf MyExtension = ".m3u" Or MyExtension = ".m3u8" Then
@@ -2279,11 +2282,10 @@ Public Class frmCartutxera
             End If
 
             Dim Indexhandle As Integer = 0
-            Try
+            If PlayedHandle IsNot Nothing Then
                 Indexhandle = PlayedHandle.Length
-            Catch ex As Exception
-                Indexhandle = 0
-            End Try
+            End If
+
             ReDim Preserve PlayedHandle(Indexhandle)
             PlayedHandle(Indexhandle).HANDLE_PLAY = ActualPlay.AUDIO_HANDLE
             PlayedHandle(Indexhandle).HANDLE_DSP = MyHandleDSP
@@ -2381,12 +2383,19 @@ Public Class frmCartutxera
                     For H As Integer = 0 To PlayedHandle.Length - 1
                         If PlayedHandle(H).HANDLE_PLAY = MyHandle Then
                             Dim Inxlen As Integer = 0
-                            Try
-                                Inxlen = TempPlayedHandle.Length
-                            Catch ex As Exception
+                            If TempPlayedHandle Is Nothing Then
                                 Inxlen = 0
-                            End Try
-                            ReDim Preserve TempPlayedHandle(Inxlen)
+                                ReDim TempPlayedHandle(Inxlen)
+                            Else
+                                Inxlen = TempPlayedHandle.Length
+                                ReDim Preserve TempPlayedHandle(Inxlen)
+                            End If
+                            'Try
+                            '    Inxlen = TempPlayedHandle.Length
+                            'Catch ex As Exception
+                            '    Inxlen = 0
+                            'End Try
+
                             TempPlayedHandle(Inxlen).HANDLE_PLAY = PlayedHandle(H).HANDLE_PLAY
                             TempPlayedHandle(Inxlen).HANDLE_DSP = PlayedHandle(H).HANDLE_DSP
                             Exit For
